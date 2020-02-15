@@ -1,0 +1,26 @@
+{
+	"private": true,
+	"scripts": {
+		"start": "wp-scripts start",
+		"build": "wp-scripts build",
+		"clean": "wp-scripts env stop && rm -rf build dist/*.* dist/js node_modules vendor wordpress",
+		"env": "wp-scripts env",
+		"lint-js": "wp-scripts lint-js",
+		"lint-php": "wp-scripts env lint-php"
+	},
+	"devDependencies": {
+		"@wordpress/icons": "^1.1.0",
+		"@wordpress/scripts": "^6.2.0",
+		"classnames": "^2.2.6",
+		"css-loader": "^3.4.2",
+		"mini-css-extract-plugin": "^0.9.0",
+		"node-sass": "^4.13.1",
+		"sass-loader": "^8.0.2",
+		"webpack-fix-style-only-entries": "^0.4.0"
+	},
+	"wp-env": {
+		"plugin-dir": "card-catalog",
+		"plugin-name": "Card Catalog",
+		"welcome-build-command": "npm start"
+	}
+}

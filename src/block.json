@@ -1,0 +1,12 @@
+{
+	"name": "sortabrilliant/card-catalog",
+	"title": "Card Catalog",
+	"category": "common",
+	"description": "",
+	"keywords": [ "sortabrilliant" ],
+	"textDomain": "card-catalog",
+	"attributes": {},
+	"editorScript": "build/index.js",
+	"editorStyle": "build/card-catalog-editor.css",
+	"style": "build/card-catalog-style.css"
+}
