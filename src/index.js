@@ -24,6 +24,18 @@ registerBlockType( 'sortabrilliant/card-catalog', {
 
 	attributes: metadata.attributes,
 
+	styles: [
+		{
+			name: 'default',
+			label: __( 'Default', 'card-catalog' ),
+		},
+		{
+			name: 'list-view',
+			label: __( 'List View', 'card-catalog' ),
+			isDefault: true,
+		}
+	],
+
 	supports: {
 		html: false,
 	},

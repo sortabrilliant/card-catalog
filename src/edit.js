@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import classnames from 'classnames';
+
+/**
  * WordPress dependencies
  */
 import { withNotices } from '@wordpress/components';
@@ -18,6 +23,16 @@ class CardCatalogEdit extends Component {
 		this.onUploadError = this.onUploadError.bind( this );
 	}
 
+	updateInnerAttributes( blockName, newAttributes ) {
+		const { innerBlocks, updateBlockAttributes } = this.props;
+
+		innerBlocks.forEach( item => {
+			if ( item.name === blockName ) {
+				updateBlockAttributes( item.clientId, newAttributes );
+			}
+		} );
+	}
+
 	onSelectFiles( files ) {
 		const {
 			clientId,
@@ -25,14 +40,38 @@ class CardCatalogEdit extends Component {
 			insertBlocks,
 		} = this.props;
 
+		const extToDashicon = ( filePath ) => {
+			if ( filePath.match( /\.(zip|tar|gz)/i ) ) {
+				return 'dashicons-media-archive';
+			}
+
+			if ( filePath.match( /\.(webmm|mpg|mp2|mpeg|mpe|mpv|ogg|mp4|m4p|m4v|avi|wmv|mov|qt|flv|swf)/i ) ) {
+				return 'dashicons-media-video';
+			}
+
+			if ( filePath.match( /\.(wav|aiff|mp3|aac|ogg|wma|flac|alac|wma)/i ) ) {
+				return 'dashicons-media-audio';
+			}
+
+			if ( filePath.match( /\.(csv|xls|xlsx)/i ) ) {
+				return 'dashicons-media-spreadsheet';
+			}
+
+			return 'dashicons-media-default';
+		};
+
 		const newBlocks = files
 			.filter( file => file && file.id && file.url && !fileIds.includes( file.id ) )
-			.map( file => createBlock( 'core/file', {
-				fileName: file.title,
-				href: file.url,
-				id: file.id,
-				textLinkHref: file.url,
-			} ) );
+			.map( file => {
+				return createBlock( 'core/file', {
+					className: classnames( 'dashicons-before', extToDashicon( file.url ) ),
+					fileName: file.title,
+					href: file.url,
+					id: file.id,
+					textLinkHref: file.url,
+					showDownloadButton: false,
+				} );
+			} );
 
 		if ( newBlocks.length > 0 ) {
 			insertBlocks( newBlocks, undefined, clientId );
@@ -48,14 +87,14 @@ class CardCatalogEdit extends Component {
 	render() {
 		const {
 			className,
-			innerBlocks,
+			hasInnerBlocks,
 			isSelected,
 			noticeUI,
 		} = this.props;
 
 		return (
 			<div className={ className }>
-				{ ( innerBlocks.length === 0 || isSelected ) &&
+				{ ( ! hasInnerBlocks || isSelected ) &&
 					<MediaPlaceholder
 						icon={ <BlockIcon icon={ icon } /> }
 						labels={ {
@@ -66,7 +105,7 @@ class CardCatalogEdit extends Component {
 						notices={ noticeUI }
 						onError={ this.onUploadError }
 						accept="*"
-						isAppender
+						isAppender={ hasInnerBlocks }
 						multiple
 					/>
 				}
@@ -91,7 +130,7 @@ export default compose( [
 
 		const innerBlocks = getBlocksByClientId( props.clientId )[ 0 ].innerBlocks;
 		const parentClientId = getBlockRootClientId( getBlockSelectionStart() );
-		const fileIds = getBlocksByClientId( props.clientId )[ 0 ].innerBlocks.map( file => file.attributes.id );
+		const fileIds = innerBlocks.map( file => file.attributes.id );
 
 		return {
 			fileIds,
@@ -104,10 +143,12 @@ export default compose( [
 	withDispatch( ( dispatch ) => {
 		const {
 			insertBlocks,
+			updateBlockAttributes,
 		} = dispatch( 'core/block-editor' );
 
 		return {
 			insertBlocks,
+			updateBlockAttributes,
 		};
 	} ),
 	withNotices,

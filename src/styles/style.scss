@@ -1,2 +1,12 @@
 .wp-block-sortabrilliant-card-catalog {
+    &.is-style-list-view .wp-block-file {
+        margin-bottom: 0;
+
+        .wp-block-file__button {
+            padding: 0;
+            margin: 0;
+            background: none;
+            color: inherit;
+        }
+    }
 }
