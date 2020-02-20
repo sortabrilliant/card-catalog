@@ -70,6 +70,20 @@ function card_catalog_register_block() {
 			'style'         => 'card-catalog-frontend',
 		)
 	);
+
+	if ( ! is_admin() ) {
+		// Frontend Script.
+		$asset_filepath = CARD_CATALOG_PLUGIN_DIR . '/build/card-catalog-frontend.asset.php';
+		$asset_file     = file_exists( $asset_filepath ) ? include $asset_filepath : $default_asset_file;
+
+		wp_enqueue_script(
+			'card-catalog-frontend',
+			CARD_CATALOG_PLUGIN_URL . 'build/card-catalog-frontend.js',
+			$asset_file['dependencies'],
+			$asset_file['version'],
+			true // Enqueue script in the footer.
+		);
+	}
 }
 
 add_action( 'init', 'card_catalog_register_block' );

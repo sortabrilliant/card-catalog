@@ -1,5 +1,5 @@
 .wp-block-sortabrilliant-card-catalog {
-    &.is-style-list-view .wp-block-file {
+    &:not(.is-style-default) .wp-block-file {
         margin-bottom: 0;
 
         .wp-block-file__button {

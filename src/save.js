@@ -8,7 +8,6 @@ class CardCatalogSave extends Component {
 	render( { className }) {
 		return (
 			<div className={ className }>
-				Card Catalog Block
 				<InnerBlocks.Content />
 			</div>
 		);

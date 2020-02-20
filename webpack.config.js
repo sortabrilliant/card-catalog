@@ -14,6 +14,7 @@ module.exports = {
 
 		'card-catalog-editor': path.resolve( process.cwd(), 'src/styles/editor.scss' ),
 		'card-catalog-style': path.resolve( process.cwd(), 'src/styles/style.scss' ),
+		'card-catalog-frontend': path.resolve( process.cwd(), 'src/frontend.js' ),
 	},
 
 	module: {

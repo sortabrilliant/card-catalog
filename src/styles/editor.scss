@@ -1,6 +1,6 @@
 [data-type="sortabrilliant/card-catalog"] {
     &:not(.is-selected):not(.has-child-selected) {
-        .is-style-list-view [data-type="core/file"] {
+        :not(.is-style-default) [data-type="core/file"] {
             margin-top: 0;
             margin-bottom: 0;
         }

@@ -6,14 +6,23 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { withNotices } from '@wordpress/components';
-import { Component } from '@wordpress/element';
-import { MediaPlaceholder, BlockIcon, InnerBlocks } from '@wordpress/block-editor';
+import { Component, Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { compose } from '@wordpress/compose';
 import { withSelect, withDispatch } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
 import { file as icon } from '@wordpress/icons';
+import {
+	BlockIcon,
+	InnerBlocks,
+	InspectorControls,
+	MediaPlaceholder,
+} from '@wordpress/block-editor';
+import {
+	PanelBody,
+	ToggleControl,
+	withNotices,
+} from '@wordpress/components';
 
 class CardCatalogEdit extends Component {
 	constructor() {
@@ -21,6 +30,7 @@ class CardCatalogEdit extends Component {
 
 		this.onSelectFiles = this.onSelectFiles.bind( this );
 		this.onUploadError = this.onUploadError.bind( this );
+		this.updateInnerAttributes = this.updateInnerAttributes.bind( this );
 	}
 
 	updateInnerAttributes( blockName, newAttributes ) {
@@ -35,6 +45,7 @@ class CardCatalogEdit extends Component {
 
 	onSelectFiles( files ) {
 		const {
+			attributes,
 			clientId,
 			fileIds,
 			insertBlocks,
@@ -69,7 +80,8 @@ class CardCatalogEdit extends Component {
 					href: file.url,
 					id: file.id,
 					textLinkHref: file.url,
-					showDownloadButton: false,
+					downloadButtonText: __( 'Download', 'card-catalog' ),
+					showDownloadButton: attributes.showDownloadButton,
 				} );
 			} );
 
@@ -86,36 +98,63 @@ class CardCatalogEdit extends Component {
 
 	render() {
 		const {
+			attributes,
 			className,
 			hasInnerBlocks,
 			isSelected,
 			noticeUI,
+			setAttributes,
 		} = this.props;
 
 		return (
-			<div className={ className }>
-				{ ( ! hasInnerBlocks || isSelected ) &&
-					<MediaPlaceholder
-						icon={ <BlockIcon icon={ icon } /> }
-						labels={ {
-							title: __( 'Card Catalog' ),
-							instructions: __( 'Drag files, upload new ones or select files from your library.' ),
-						} }
-						onSelect={ this.onSelectFiles }
-						notices={ noticeUI }
-						onError={ this.onUploadError }
-						accept="*"
-						isAppender={ hasInnerBlocks }
-						multiple
-					/>
-				}
+			<Fragment>
+				<InspectorControls>
+					<PanelBody title={ __( 'Card Catalog Settings', 'card-catalog' ) }>
+						<ToggleControl
+							label={ __( 'Show download button', 'card-catalog' ) }
+							checked={ attributes.showDownloadButton }
+							onChange={ ( showDownloadButton ) => {
+								setAttributes( { showDownloadButton } );
+								this.updateInnerAttributes( 'core/file', { showDownloadButton } );
+							} }
+						/>
+					</PanelBody>
+				</InspectorControls>
+				<div className={ className }>
+					<div>
+						<button className="sort desc" data-sort="name">Sort by Name</button>
+						<input className="search" placeholder="Search" />
+					</div>
+					<div>
+						<button>All</button>
+						<button>Images</button>
+						<button>Documents</button>
+						<button>Archives</button>
+					</div>
 
-				<InnerBlocks
-					allowedBlocks={ [ 'core/file' ] }
-					renderAppender={ false }
-					templateInsertUpdatesSelection={ false }
-				/>
-			</div>
+					{ ( !hasInnerBlocks || isSelected ) &&
+						<MediaPlaceholder
+							icon={ <BlockIcon icon={ icon } /> }
+							labels={ {
+								title: __( 'Card Catalog', 'card-catalog' ),
+								instructions: __( 'Drag files, upload new ones or select files from your library.', 'card-catalog' ),
+							} }
+							onSelect={ this.onSelectFiles }
+							notices={ noticeUI }
+							onError={ this.onUploadError }
+							accept="*"
+							isAppender={ hasInnerBlocks }
+							multiple
+						/>
+					}
+
+					<InnerBlocks
+						allowedBlocks={ [ 'core/file' ] }
+						renderAppender={ false }
+						templateInsertUpdatesSelection={ false }
+					/>
+				</div>
+			</Fragment>
 		);
 	}
 }

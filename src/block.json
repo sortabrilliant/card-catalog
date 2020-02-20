@@ -5,7 +5,12 @@
 	"description": "",
 	"keywords": [ "sortabrilliant" ],
 	"textDomain": "card-catalog",
-	"attributes": {},
+	"attributes": {
+		"showDownloadButton": {
+			"type": "boolean",
+			"default": false
+		}
+	},
 	"editorScript": "build/index.js",
 	"editorStyle": "build/card-catalog-editor.css",
 	"style": "build/card-catalog-style.css"
