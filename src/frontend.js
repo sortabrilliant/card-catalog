@@ -27,26 +27,27 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
         const filterWrapper = document.createElement( 'div' );
         filterWrapper.className = 'sortabrilliant-card-catalog__filter';
-
-        // Add filter archives button
-        const filterArchive = document.createElement( 'button' );
-        filterArchive.innerHTML = __( 'Archives', 'card-catalog' );
-        filterWrapper.prepend( filterArchive );
-
-        // Add filter documents button
-        const filterDocument = document.createElement( 'button' );
-        filterDocument.innerHTML = __( 'Documents', 'card-catalog' );
-        filterWrapper.prepend( filterDocument );
-
-        // Add filter images button
-        const filterImage = document.createElement( 'button' );
-        filterImage.innerHTML = __( 'Images', 'card-catalog' );
-        filterWrapper.prepend( filterImage );
+        filterWrapper.innerText = __( 'Show: ', 'card-catalog' );
 
         // Add filter reset button
         const filterAll = document.createElement( 'button' );
         filterAll.innerHTML = __( 'All', 'card-catalog' );
-        filterWrapper.prepend( filterAll );
+        filterWrapper.append( filterAll );
+
+        // Add filter images button
+        const filterImage = document.createElement( 'button' );
+        filterImage.innerHTML = __( 'Images', 'card-catalog' );
+        filterWrapper.append( filterImage );
+
+        // Add filter documents button
+        const filterDocument = document.createElement( 'button' );
+        filterDocument.innerHTML = __( 'Documents', 'card-catalog' );
+        filterWrapper.append( filterDocument );
+
+        // Add filter archives button
+        const filterArchive = document.createElement( 'button' );
+        filterArchive.innerHTML = __( 'Archives', 'card-catalog' );
+        filterWrapper.append( filterArchive );
 
         const searchWrapper = document.createElement( 'div' );
         searchWrapper.className = 'sortabrilliant-card-catalog__search';

@@ -128,6 +128,7 @@ class CardCatalogEdit extends Component {
 							<button className="sort desc" data-sort="name">Sort by Name</button>
 						</div>
 						<div className="sortabrilliant-card-catalog__filter">
+							{ __( 'Show: ', 'card-catalog' ) }
 							<button>All</button>
 							<button>Images</button>
 							<button>Documents</button>
