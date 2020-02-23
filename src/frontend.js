@@ -25,13 +25,6 @@ document.addEventListener( 'DOMContentLoaded', () => {
         } );
         element.appendChild( wrapper );
 
-        const cardCatalog = new List( wrapperID, {
-            valueNames: [
-                'name',
-                { name: 'href', attr: 'href' }
-            ]
-        } );
-
         const filterWrapper = document.createElement( 'div' );
 
         // Add filter archives button
@@ -39,36 +32,20 @@ document.addEventListener( 'DOMContentLoaded', () => {
         filterArchive.innerHTML = __( 'Archives', 'card-catalog' );
         filterWrapper.prepend( filterArchive );
 
-        filterArchive.addEventListener( 'click', () => {
-            cardCatalog.filter( item => item.values().href.match( /\.(zip|tar|gz)/i ) );
-        } );
-
         // Add filter documents button
         const filterDocument = document.createElement( 'button' );
         filterDocument.innerHTML = __( 'Documents', 'card-catalog' );
         filterWrapper.prepend( filterDocument );
-
-        filterDocument.addEventListener( 'click', () => {
-            cardCatalog.filter( item => item.values().href.match( /\.(doc|docx|docm|dotm|oth|odt|pdf|rtf|bin|csv|xps|xls|xlsx)/i ) );
-        } );
 
         // Add filter images button
         const filterImage = document.createElement( 'button' );
         filterImage.innerHTML = __( 'Images', 'card-catalog' );
         filterWrapper.prepend( filterImage );
 
-        filterImage.addEventListener( 'click', () => {
-            cardCatalog.filter( item => item.values().href.match( /\.(bmp|gif|ico|jpeg|jpg|png|svg|ti|tiff|webp)/i ) );
-        } );
-
         // Add filter reset button
         const filterAll = document.createElement( 'button' );
         filterAll.innerHTML = __( 'All', 'card-catalog' );
         filterWrapper.prepend( filterAll );
-
-        filterAll.addEventListener( 'click', () => {
-            cardCatalog.filter( () => true );
-        } );
 
         const searchWrapper = document.createElement( 'div' );
 
@@ -87,5 +64,24 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
         element.prepend( filterWrapper );
         element.prepend( searchWrapper );
+
+        const cardCatalog = new List( wrapperID, {
+            valueNames: [
+                'name',
+                { name: 'href', attr: 'href' }
+            ]
+        } );
+
+        const addClickHandler = ( elm, regex ) => {
+            elm.addEventListener( 'click', event => {
+                event.preventDefault();
+                cardCatalog.filter( item => item.values().href.match( regex ) );
+            } );
+        }
+
+        addClickHandler( filterArchive, /\.(zip|tar|gz)/i );
+        addClickHandler( filterDocument, /\.(doc|docx|docm|dotm|oth|odt|pdf|rtf|bin|csv|xps|xls|xlsx)/i );
+        addClickHandler( filterImage, /\.(bmp|gif|ico|jpeg|jpg|png|svg|ti|tiff|webp)/i );
+        addClickHandler( filterAll, /./i );
     } );
 } );
