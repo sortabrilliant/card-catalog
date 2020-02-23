@@ -1,10 +1,11 @@
 [data-type="sortabrilliant/card-catalog"] {
-    &:not(.is-selected):not(.has-child-selected) {
-        :not(.is-style-default) [data-type="core/file"] {
+    .is-style-grid-view {
+        .wp-block-file__button-richtext-wrapper {
             margin-top: 0;
-            margin-bottom: 0;
+        }
+
+        .wp-block-file__copy-url-button {
+            margin: 1em 0 0;
         }
     }
-
-    .wp-block-sortabrilliant-card-catalog {}
 }

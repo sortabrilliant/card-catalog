@@ -1,12 +1,47 @@
 .wp-block-sortabrilliant-card-catalog {
-    &:not(.is-style-default) .wp-block-file {
-        margin-bottom: 0;
+    &:not(.is-style-default) {
+        .list,
+        .block-editor-block-list__layout {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    }
 
-        .wp-block-file__button {
-            padding: 0;
-            margin: 0;
-            background: none;
-            color: inherit;
+    &.is-style-grid-view {
+        .block-editor-block-list__layout [data-type="core/file"],
+        .list .wp-block-file {
+            margin-left: 0;
+            margin-right: 0;
+            width: calc( 100% / 3 );
+        }
+
+        .wp-block-file,
+        .wp-block-file__content-wrapper {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+
+            &::before {
+                font-size: 40px;
+                height: 40px;
+                width: 40px;
+            }
+        }
+
+        .wp-block-file__button,
+        .wp-block-file__button-richtext-wrapper {
+            margin: 0.5em 0 0;
+        }
+    }
+
+    &.is-style-list-view {
+        .block-editor-block-list__layout [data-type="core/file"],
+        .list .wp-block-file {
+            align-items: center;
+            display: flex;
+            margin-bottom: 0.25em;
+            margin-top: 0.25em;
+            width: 100%;
         }
     }
 }
