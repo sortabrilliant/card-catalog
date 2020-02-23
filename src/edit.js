@@ -122,8 +122,8 @@ class CardCatalogEdit extends Component {
 				</InspectorControls>
 				<div className={ className }>
 					<div>
-						<button className="sort desc" data-sort="name">Sort by Name</button>
 						<input className="search" placeholder="Search" />
+						<button className="sort desc" data-sort="name">Sort by Name</button>
 					</div>
 					<div>
 						<button>All</button>

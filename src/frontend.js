@@ -25,19 +25,6 @@ document.addEventListener( 'DOMContentLoaded', () => {
         } );
         element.appendChild( wrapper );
 
-        // Add search input
-        const searchInput = document.createElement( 'input' );
-        searchInput.setAttribute( 'class', 'search' );
-        searchInput.setAttribute( 'placeholder', __( 'Search', 'card-catalog' ) );
-        element.prepend( searchInput );
-
-        // Add sort by name button
-        const nameSort = document.createElement( 'button' );
-        nameSort.innerHTML = __( 'Sort by Name', 'card-catalog' );
-        nameSort.setAttribute( 'class', 'sort' );
-        nameSort.setAttribute( 'data-sort', 'name' );
-        element.prepend( nameSort );
-
         const cardCatalog = new List( wrapperID, {
             valueNames: [
                 'name',
@@ -45,10 +32,12 @@ document.addEventListener( 'DOMContentLoaded', () => {
             ]
         } );
 
+        const filterWrapper = document.createElement( 'div' );
+
         // Add filter archives button
         const filterArchive = document.createElement( 'button' );
         filterArchive.innerHTML = __( 'Archives', 'card-catalog' );
-        element.prepend( filterArchive );
+        filterWrapper.prepend( filterArchive );
 
         filterArchive.addEventListener( 'click', () => {
             cardCatalog.filter( item => item.values().href.match( /\.(zip|tar|gz)/i ) );
@@ -57,7 +46,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
         // Add filter documents button
         const filterDocument = document.createElement( 'button' );
         filterDocument.innerHTML = __( 'Documents', 'card-catalog' );
-        element.prepend( filterDocument );
+        filterWrapper.prepend( filterDocument );
 
         filterDocument.addEventListener( 'click', () => {
             cardCatalog.filter( item => item.values().href.match( /\.(doc|docx|docm|dotm|oth|odt|pdf|rtf|bin|csv|xps|xls|xlsx)/i ) );
@@ -66,7 +55,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
         // Add filter images button
         const filterImage = document.createElement( 'button' );
         filterImage.innerHTML = __( 'Images', 'card-catalog' );
-        element.prepend( filterImage );
+        filterWrapper.prepend( filterImage );
 
         filterImage.addEventListener( 'click', () => {
             cardCatalog.filter( item => item.values().href.match( /\.(bmp|gif|ico|jpeg|jpg|png|svg|ti|tiff|webp)/i ) );
@@ -75,10 +64,28 @@ document.addEventListener( 'DOMContentLoaded', () => {
         // Add filter reset button
         const filterAll = document.createElement( 'button' );
         filterAll.innerHTML = __( 'All', 'card-catalog' );
-        element.prepend( filterAll );
+        filterWrapper.prepend( filterAll );
 
         filterAll.addEventListener( 'click', () => {
             cardCatalog.filter( () => true );
         } );
+
+        const searchWrapper = document.createElement( 'div' );
+
+        // Add sort by name button
+        const nameSort = document.createElement( 'button' );
+        nameSort.innerHTML = __( 'Sort by Name', 'card-catalog' );
+        nameSort.setAttribute( 'class', 'sort' );
+        nameSort.setAttribute( 'data-sort', 'name' );
+        searchWrapper.prepend( nameSort );
+
+        // Add search input
+        const searchInput = document.createElement( 'input' );
+        searchInput.setAttribute( 'class', 'search' );
+        searchInput.setAttribute( 'placeholder', __( 'Search', 'card-catalog' ) );
+        searchWrapper.prepend( searchInput );
+
+        element.prepend( filterWrapper );
+        element.prepend( searchWrapper );
     } );
 } );
