@@ -1,8 +1,3 @@
-## What is this?
-TBD
+# Card Catalog
 
-## How does it work?
-TBD
-
-## Where can I learn more?
-Learn more at [sorta brilliant](https://sortabrilliant.com/card-catalog/).
+The perfect solution for digital hoarders. Share multiple files with ease. 
