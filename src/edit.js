@@ -19,6 +19,7 @@ import {
 	MediaPlaceholder,
 } from '@wordpress/block-editor';
 import {
+	Disabled,
 	PanelBody,
 	ToggleControl,
 	withNotices,
@@ -121,16 +122,18 @@ class CardCatalogEdit extends Component {
 					</PanelBody>
 				</InspectorControls>
 				<div className={ className }>
-					<div>
-						<input className="search" placeholder="Search" />
-						<button className="sort desc" data-sort="name">Sort by Name</button>
-					</div>
-					<div>
-						<button>All</button>
-						<button>Images</button>
-						<button>Documents</button>
-						<button>Archives</button>
-					</div>
+					<Disabled>
+						<div className="sortabrilliant-card-catalog__search">
+							<input className="search" placeholder="Search" />
+							<button className="sort desc" data-sort="name">Sort by Name</button>
+						</div>
+						<div className="sortabrilliant-card-catalog__filter">
+							<button>All</button>
+							<button>Images</button>
+							<button>Documents</button>
+							<button>Archives</button>
+						</div>
+					</Disabled>
 
 					{ ( !hasInnerBlocks || isSelected ) &&
 						<MediaPlaceholder

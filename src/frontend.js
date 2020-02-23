@@ -26,6 +26,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
         element.appendChild( wrapper );
 
         const filterWrapper = document.createElement( 'div' );
+        filterWrapper.className = 'sortabrilliant-card-catalog__filter';
 
         // Add filter archives button
         const filterArchive = document.createElement( 'button' );
@@ -48,6 +49,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
         filterWrapper.prepend( filterAll );
 
         const searchWrapper = document.createElement( 'div' );
+        searchWrapper.className = 'sortabrilliant-card-catalog__search';
 
         // Add sort by name button
         const nameSort = document.createElement( 'button' );

@@ -30,7 +30,7 @@
 
         .wp-block-file__button,
         .wp-block-file__button-richtext-wrapper {
-            margin: 0.5em 0 0;
+            margin: 0.25em 0 0;
         }
     }
 
@@ -42,6 +42,16 @@
             margin-bottom: 0.25em;
             margin-top: 0.25em;
             width: 100%;
+        }
+    }
+
+    .sortabrilliant-card-catalog__search,
+    .sortabrilliant-card-catalog__filter {
+        display: flex;
+        margin-bottom: 1em;
+
+        > * {
+            margin: 0 0.25em 0;
         }
     }
 }
