@@ -11,7 +11,6 @@ import { __ } from '@wordpress/i18n';
 import { compose } from '@wordpress/compose';
 import { withSelect, withDispatch } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
-import { file as icon } from '@wordpress/icons';
 import {
 	BlockIcon,
 	InnerBlocks,
@@ -24,6 +23,11 @@ import {
 	ToggleControl,
 	withNotices,
 } from '@wordpress/components';
+
+/**
+ * Internal dependencies
+ */
+import { default as icon } from './icon';
 
 class CardCatalogEdit extends Component {
 	constructor() {
@@ -121,20 +125,22 @@ class CardCatalogEdit extends Component {
 						/>
 					</PanelBody>
 				</InspectorControls>
-				<div className={ className }>
-					<Disabled>
-						<div className="sortabrilliant-card-catalog__search">
-							<input className="search" placeholder="Search" />
-							<button className="sort desc" data-sort="name">Sort by Name</button>
-						</div>
-						<div className="sortabrilliant-card-catalog__filter">
-							{ __( 'Show: ', 'card-catalog' ) }
-							<button>All</button>
-							<button>Images</button>
-							<button>Documents</button>
-							<button>Archives</button>
-						</div>
-					</Disabled>
+				<div className={className}>
+					{ hasInnerBlocks &&
+						<Disabled>
+							<div className="sortabrilliant-card-catalog__search">
+								<input className="search" placeholder="Search" />
+								<button className="sort desc" data-sort="name">Sort by Name</button>
+							</div>
+							<div className="sortabrilliant-card-catalog__filter">
+								{ __( 'Show: ', 'card-catalog' ) }
+								<button>All</button>
+								<button>Images</button>
+								<button>Documents</button>
+								<button>Archives</button>
+							</div>
+						</Disabled>
+					}
 
 					{ ( !hasInnerBlocks || isSelected ) &&
 						<MediaPlaceholder
