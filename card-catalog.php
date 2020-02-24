@@ -33,7 +33,7 @@ function card_catalog_register_block() {
 	$asset_file     = file_exists( $asset_filepath ) ? include $asset_filepath : $default_asset_file;
 
 	wp_register_script(
-		'card-catalog-editor',
+		'card-catalog-script',
 		CARD_CATALOG_PLUGIN_URL . 'build/index.js',
 		$asset_file['dependencies'],
 		$asset_file['version'],
@@ -45,7 +45,7 @@ function card_catalog_register_block() {
 	$asset_file     = file_exists( $asset_filepath ) ? include $asset_filepath : $default_asset_file;
 
 	wp_register_style(
-		'card-catalog-editor',
+		'card-catalog-editor-style',
 		CARD_CATALOG_PLUGIN_URL . 'build/card-catalog-editor.css',
 		array(),
 		$asset_file['version']
@@ -56,7 +56,7 @@ function card_catalog_register_block() {
 	$asset_file     = file_exists( $asset_filepath ) ? include $asset_filepath : $default_asset_file;
 
 	wp_register_style(
-		'card-catalog-frontend',
+		'card-catalog-frontend-style',
 		CARD_CATALOG_PLUGIN_URL . 'build/card-catalog-style.css',
 		array(),
 		$asset_file['version']
@@ -65,9 +65,9 @@ function card_catalog_register_block() {
 	register_block_type(
 		'sortabrilliant/card-catalog',
 		array(
-			'editor_script' => 'card-catalog-editor',
-			'editor_style'  => 'card-catalog-editor',
-			'style'         => 'card-catalog-frontend',
+			'editor_script' => 'card-catalog-script',
+			'editor_style'  => 'card-catalog-editor-style',
+			'style'         => 'card-catalog-frontend-style',
 		)
 	);
 
