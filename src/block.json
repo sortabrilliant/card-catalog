@@ -2,8 +2,8 @@
 	"name": "sortabrilliant/card-catalog",
 	"title": "Card Catalog",
 	"category": "common",
-	"description": "",
-	"keywords": [ "sortabrilliant" ],
+	"description": "The perfect solution for digital hoarders. Share multiple files with ease.",
+	"keywords": [ "file, file manager, card catalog" ],
 	"textDomain": "card-catalog",
 	"attributes": {
 		"showDownloadButton": {
