@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Card Catalog
  * Plugin URI: https://sortabrilliant.com/card-catalog/
- * Description: Add a list of internal links allowing your readers to quickly navigate around.
+ * Description: Rejoice digital hoarders. You now have way to easily display large numbers of files on your WordPress site.
  * Author: sorta brilliant
  * Author URI: https://sortabrilliant.com
  * Version: 1.0.0
