@@ -1,3 +1,4 @@
+/* global _wpUtilSettings */
 /**
  * Internal dependencies
  */
@@ -11,10 +12,19 @@ import { default as save } from './save';
  */
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
+import { ExternalLink } from '@wordpress/components';
+import { Fragment } from '@wordpress/element';
 
 registerBlockType( 'sortabrilliant/card-catalog', {
 	title: __( 'Card Catalog', 'card-catalog' ),
-	description: __( '', 'card-catalog' ),
+	description: (
+		<Fragment>
+			<p>{ __( 'Card Catalog Description', 'card-catalog' ) }</p>
+			<ExternalLink href={ _wpUtilSettings.ajax.url.replace('admin-ajax.php', 'plugin-install.php?s=sortabrilliant&tab=search&type=author') }>
+				{ __( 'More from sortabrilliant', 'card-catalog' ) }
+			</ExternalLink>
+		</Fragment>
+	),
 	icon,
 	category: metadata.category,
 	keywords: [
