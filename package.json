@@ -9,7 +9,6 @@
 		"lint-php": "wp-scripts env lint-php"
 	},
 	"devDependencies": {
-		"@wordpress/icons": "^1.1.0",
 		"@wordpress/scripts": "^6.2.0",
 		"classnames": "^2.2.6",
 		"css-loader": "^3.4.2",
