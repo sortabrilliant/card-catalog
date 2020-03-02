@@ -44,10 +44,6 @@ registerBlockType( 'sortabrilliant/card-catalog', {
 			label: __( 'Grid View', 'card-catalog' ),
 			isDefault: true,
 		},
-		{
-			name: 'list-view',
-			label: __( 'List View', 'card-catalog' ),
-		},
 	],
 
 	supports: {
