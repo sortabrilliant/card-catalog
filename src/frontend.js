@@ -21,6 +21,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
         [ ...element.children ].forEach( child => {
             child.children[ 0 ].classList.add( 'name', 'href' );
+            child.children[ 0 ].setAttribute( 'download', '' );
             wrapper.appendChild( child );
         } );
         element.appendChild( wrapper );
