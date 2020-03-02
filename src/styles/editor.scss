@@ -1,4 +1,9 @@
 [data-type="sortabrilliant/card-catalog"] {
+
+    .components-placeholder:not(.is-appender) {
+        margin-bottom: 0;
+    }
+
     .is-style-grid-view {
         .wp-block-file__button-richtext-wrapper {
             margin-top: 0;

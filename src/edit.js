@@ -125,19 +125,16 @@ class CardCatalogEdit extends Component {
 						/>
 					</PanelBody>
 				</InspectorControls>
-				<div className={className}>
+				<div className={ className }>
 					{ hasInnerBlocks &&
-						<Disabled>
-							<div className="sortabrilliant-card-catalog__search">
-								<input className="search" placeholder="Search" />
-								<button className="sort desc" data-sort="name">Sort by Name</button>
-							</div>
+						<Disabled className="wp-block-search">
+							<div className="wp-block-search__label">{ __( 'Search', 'card-catalog' ) }</div>
+							<input className="wp-block-search__input" placeholder="Search" />
 							<div className="sortabrilliant-card-catalog__filter">
-								{ __( 'Show: ', 'card-catalog' ) }
-								<button>All</button>
-								<button>Images</button>
-								<button>Documents</button>
-								<button>Archives</button>
+								<button className="wp-block-search__button">{ __( 'All', 'card-catalog' ) }</button>
+								<button className="wp-block-search__button">{ __( 'Images', 'card-catalog' ) }</button>
+								<button className="wp-block-search__button">{ __( 'Documents', 'card-catalog' ) }</button>
+								<button className="wp-block-search__button">{ __( 'Archives', 'card-catalog' ) }</button>
 							</div>
 						</Disabled>
 					}
@@ -170,6 +167,7 @@ class CardCatalogEdit extends Component {
 }
 
 export default compose( [
+
 	withSelect( ( select, props ) => {
 		const {
 			getBlockRootClientId,
@@ -189,6 +187,7 @@ export default compose( [
 			isSelected: props.isSelected || props.clientId === parentClientId,
 		};
 	} ),
+
 	withDispatch( ( dispatch ) => {
 		const {
 			insertBlocks,
@@ -200,5 +199,6 @@ export default compose( [
 			updateBlockAttributes,
 		};
 	} ),
+
 	withNotices,
 ] )( CardCatalogEdit );

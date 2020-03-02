@@ -20,53 +20,53 @@ document.addEventListener( 'DOMContentLoaded', () => {
         wrapper.setAttribute( 'class', 'list' );
 
         [ ...element.children ].forEach( child => {
-            child.children[0].classList.add( 'name', 'href' );
+            child.children[ 0 ].classList.add( 'name', 'href' );
             wrapper.appendChild( child );
         } );
         element.appendChild( wrapper );
 
         const filterWrapper = document.createElement( 'div' );
         filterWrapper.className = 'sortabrilliant-card-catalog__filter';
-        filterWrapper.innerText = __( 'Show: ', 'card-catalog' );
 
         // Add filter reset button
         const filterAll = document.createElement( 'button' );
         filterAll.innerHTML = __( 'All', 'card-catalog' );
-        filterWrapper.append( filterAll );
+        filterAll.setAttribute( 'class', 'wp-block-search__button' );
 
         // Add filter images button
         const filterImage = document.createElement( 'button' );
         filterImage.innerHTML = __( 'Images', 'card-catalog' );
-        filterWrapper.append( filterImage );
+        filterImage.setAttribute( 'class', 'wp-block-search__button' );
 
         // Add filter documents button
         const filterDocument = document.createElement( 'button' );
         filterDocument.innerHTML = __( 'Documents', 'card-catalog' );
-        filterWrapper.append( filterDocument );
+        filterDocument.setAttribute( 'class', 'wp-block-search__button' );
 
         // Add filter archives button
         const filterArchive = document.createElement( 'button' );
         filterArchive.innerHTML = __( 'Archives', 'card-catalog' );
-        filterWrapper.append( filterArchive );
-
-        const searchWrapper = document.createElement( 'div' );
-        searchWrapper.className = 'sortabrilliant-card-catalog__search';
-
-        // Add sort by name button
-        const nameSort = document.createElement( 'button' );
-        nameSort.innerHTML = __( 'Sort by Name', 'card-catalog' );
-        nameSort.setAttribute( 'class', 'sort' );
-        nameSort.setAttribute( 'data-sort', 'name' );
-        searchWrapper.prepend( nameSort );
+        filterArchive.setAttribute( 'class', 'wp-block-search__button' );
 
         // Add search input
         const searchInput = document.createElement( 'input' );
-        searchInput.setAttribute( 'class', 'search' );
+        searchInput.setAttribute( 'class', 'search wp-block-search__input' );
+        searchInput.setAttribute( 'type', 'search' );
         searchInput.setAttribute( 'placeholder', __( 'Search', 'card-catalog' ) );
-        searchWrapper.prepend( searchInput );
+
+        // Add search label
+        const searchLabel = document.createElement( 'label' );
+        searchLabel.setAttribute( 'class', 'search wp-block-search__label' );
+        searchLabel.innerText = __( 'Search', 'card-catalog' );
+
+        filterWrapper.append( filterAll );
+        filterWrapper.append( filterImage );
+        filterWrapper.append( filterDocument );
+        filterWrapper.append( filterArchive );
 
         element.prepend( filterWrapper );
-        element.prepend( searchWrapper );
+        element.prepend( searchInput );
+        element.prepend( searchLabel );
 
         const cardCatalog = new List( wrapperID, {
             valueNames: [

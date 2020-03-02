@@ -47,39 +47,22 @@
         }
     }
 
-    .sortabrilliant-card-catalog__search,
+    .wp-block-search__input {
+        margin-bottom: 0;
+        width: 100%;
+    }
+
     .sortabrilliant-card-catalog__filter {
-        align-items: center;
         display: flex;
-        line-height: 1;
+        margin-top: 1em;
         margin-bottom: 1em;
 
         > * {
             margin: 0 0.25em 0;
         }
 
-        button,
-        input {
-            border: 1px solid rgba( 0, 0, 0, 0.25 );
-            font-weight: normal;
-            line-height: 1;
-            padding: 0.25em 0.5em;
-            text-decoration: none;
-            text-transform: none;
-            white-space: nowrap;
-        }
-
-        input {
-            align-self: stretch;
-        }
-
-        button {
-            color: rgb( 255, 255, 255 );
-            background: rgba( 0, 0, 0, 0.35 );
-
-            &:hover {
-                background: rgba( 0, 0, 0, 0.75 );
-            }
+        :first-child {
+            margin-left: 0;
         }
     }
 }
