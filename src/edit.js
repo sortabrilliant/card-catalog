@@ -6,7 +6,7 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { Component, Fragment } from '@wordpress/element';
+import { Component } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { compose } from '@wordpress/compose';
 import { withSelect, withDispatch } from '@wordpress/data';
@@ -14,13 +14,10 @@ import { createBlock } from '@wordpress/blocks';
 import {
 	BlockIcon,
 	InnerBlocks,
-	InspectorControls,
 	MediaPlaceholder,
 } from '@wordpress/block-editor';
 import {
 	Disabled,
-	PanelBody,
-	ToggleControl,
 	withNotices,
 } from '@wordpress/components';
 
@@ -35,17 +32,6 @@ class CardCatalogEdit extends Component {
 
 		this.onSelectFiles = this.onSelectFiles.bind( this );
 		this.onUploadError = this.onUploadError.bind( this );
-		this.updateInnerAttributes = this.updateInnerAttributes.bind( this );
-	}
-
-	updateInnerAttributes( blockName, newAttributes ) {
-		const { innerBlocks, updateBlockAttributes } = this.props;
-
-		innerBlocks.forEach( item => {
-			if ( item.name === blockName ) {
-				updateBlockAttributes( item.clientId, newAttributes );
-			}
-		} );
 	}
 
 	onSelectFiles( files ) {
@@ -103,65 +89,49 @@ class CardCatalogEdit extends Component {
 
 	render() {
 		const {
-			attributes,
 			className,
 			hasInnerBlocks,
 			isSelected,
 			noticeUI,
-			setAttributes,
 		} = this.props;
 
 		return (
-			<Fragment>
-				<InspectorControls>
-					<PanelBody title={ __( 'Card Catalog Settings', 'card-catalog' ) }>
-						<ToggleControl
-							label={ __( 'Show download button', 'card-catalog' ) }
-							checked={ attributes.showDownloadButton }
-							onChange={ ( showDownloadButton ) => {
-								setAttributes( { showDownloadButton } );
-								this.updateInnerAttributes( 'core/file', { showDownloadButton } );
-							} }
-						/>
-					</PanelBody>
-				</InspectorControls>
-				<div className={ className }>
-					{ hasInnerBlocks &&
-						<Disabled className="wp-block-search">
-							<div className="wp-block-search__label">{ __( 'Search', 'card-catalog' ) }</div>
-							<input className="wp-block-search__input" placeholder="Search" />
-							<div className="sortabrilliant-card-catalog__filter">
-								<button className="wp-block-search__button">{ __( 'All', 'card-catalog' ) }</button>
-								<button className="wp-block-search__button">{ __( 'Images', 'card-catalog' ) }</button>
-								<button className="wp-block-search__button">{ __( 'Documents', 'card-catalog' ) }</button>
-								<button className="wp-block-search__button">{ __( 'Archives', 'card-catalog' ) }</button>
-							</div>
-						</Disabled>
-					}
+			<div className={ className }>
+				{ hasInnerBlocks &&
+					<Disabled className="wp-block-search">
+						<div className="wp-block-search__label">{ __( 'Search', 'card-catalog' ) }</div>
+						<input className="wp-block-search__input" placeholder={ __( 'Search', 'card-catalog' ) } />
+						<div className="sortabrilliant-card-catalog__filter">
+							<button className="wp-block-search__button">{ __( 'All', 'card-catalog' ) }</button>
+							<button className="wp-block-search__button">{ __( 'Images', 'card-catalog' ) }</button>
+							<button className="wp-block-search__button">{ __( 'Documents', 'card-catalog' ) }</button>
+							<button className="wp-block-search__button">{ __( 'Archives', 'card-catalog' ) }</button>
+						</div>
+					</Disabled>
+				}
 
-					{ ( !hasInnerBlocks || isSelected ) &&
-						<MediaPlaceholder
-							icon={ <BlockIcon icon={ icon } /> }
-							labels={ {
-								title: __( 'Card Catalog', 'card-catalog' ),
-								instructions: __( 'Drag files, upload new ones or select files from your library.', 'card-catalog' ),
-							} }
-							onSelect={ this.onSelectFiles }
-							notices={ noticeUI }
-							onError={ this.onUploadError }
-							accept="*"
-							isAppender={ hasInnerBlocks }
-							multiple
-						/>
-					}
-
-					<InnerBlocks
-						allowedBlocks={ [ 'core/file' ] }
-						renderAppender={ false }
-						templateInsertUpdatesSelection={ false }
+				{ ( !hasInnerBlocks || isSelected ) &&
+					<MediaPlaceholder
+						icon={ <BlockIcon icon={ icon } /> }
+						labels={ {
+							title: __( 'Card Catalog', 'card-catalog' ),
+							instructions: __( 'Drag files, upload new ones or select files from your library.', 'card-catalog' ),
+						} }
+						onSelect={ this.onSelectFiles }
+						notices={ noticeUI }
+						onError={ this.onUploadError }
+						accept="*"
+						isAppender={ hasInnerBlocks }
+						multiple
 					/>
-				</div>
-			</Fragment>
+				}
+
+				<InnerBlocks
+					allowedBlocks={ [ 'core/file' ] }
+					renderAppender={ false }
+					templateInsertUpdatesSelection={ false }
+				/>
+			</div>
 		);
 	}
 }
@@ -191,12 +161,10 @@ export default compose( [
 	withDispatch( ( dispatch ) => {
 		const {
 			insertBlocks,
-			updateBlockAttributes,
 		} = dispatch( 'core/block-editor' );
 
 		return {
 			insertBlocks,
-			updateBlockAttributes,
 		};
 	} ),
 
