@@ -70,20 +70,34 @@ function card_catalog_register_block() {
 			'style'         => 'card-catalog-frontend-style',
 		)
 	);
-
-	if ( ! is_admin() ) {
-		// Frontend Script.
-		$asset_filepath = CARD_CATALOG_PLUGIN_DIR . '/build/card-catalog-frontend.asset.php';
-		$asset_file     = file_exists( $asset_filepath ) ? include $asset_filepath : $default_asset_file;
-
-		wp_enqueue_script(
-			'card-catalog-frontend',
-			CARD_CATALOG_PLUGIN_URL . 'build/card-catalog-frontend.js',
-			$asset_file['dependencies'],
-			$asset_file['version'],
-			true // Enqueue script in the footer.
-		);
-	}
 }
 
 add_action( 'init', 'card_catalog_register_block' );
+
+/**
+ * Enqueues the frontend script.
+ */
+function card_catalog_enqueue_scripts() {
+	if ( ! has_block( 'sortabrilliant/card-catalog' ) ) {
+		return;
+	}
+
+	$default_asset_file = array(
+		'dependencies' => array(),
+		'version'      => CARD_CATALOG_VERSION,
+	);
+
+	// Frontend Script.
+	$asset_filepath = CARD_CATALOG_PLUGIN_DIR . '/build/card-catalog-frontend.asset.php';
+	$asset_file     = file_exists( $asset_filepath ) ? include $asset_filepath : $default_asset_file;
+
+	wp_enqueue_script(
+		'card-catalog-frontend',
+		CARD_CATALOG_PLUGIN_URL . 'build/card-catalog-frontend.js',
+		$asset_file['dependencies'],
+		$asset_file['version'],
+		true // Enqueue script in the footer.
+	);
+}
+
+add_action( 'wp_enqueue_scripts', 'card_catalog_enqueue_scripts' );
