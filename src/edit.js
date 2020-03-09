@@ -25,6 +25,7 @@ import {
  * Internal dependencies
  */
 import { default as icon } from './icon';
+import { extensionToIcon } from './extension-helpers';
 
 class CardCatalogEdit extends Component {
 	constructor() {
@@ -42,31 +43,11 @@ class CardCatalogEdit extends Component {
 			insertBlocks,
 		} = this.props;
 
-		const extToDashicon = ( filePath ) => {
-			if ( filePath.match( /\.(zip|tar|gz)/i ) ) {
-				return 'dashicons-media-archive';
-			}
-
-			if ( filePath.match( /\.(webmm|mpg|mp2|mpeg|mpe|mpv|ogg|mp4|m4p|m4v|avi|wmv|mov|qt|flv|swf)/i ) ) {
-				return 'dashicons-media-video';
-			}
-
-			if ( filePath.match( /\.(wav|aiff|mp3|aac|ogg|wma|flac|alac|wma)/i ) ) {
-				return 'dashicons-media-audio';
-			}
-
-			if ( filePath.match( /\.(csv|xls|xlsx)/i ) ) {
-				return 'dashicons-media-spreadsheet';
-			}
-
-			return 'dashicons-media-default';
-		};
-
 		const newBlocks = files
 			.filter( file => file && file.id && file.url && !fileIds.includes( file.id ) )
 			.map( file => {
 				return createBlock( 'core/file', {
-					className: classnames( 'dashicons-before', extToDashicon( file.url ) ),
+					className: classnames( 'far', extensionToIcon( file.url ) ),
 					fileName: file.title,
 					href: file.url,
 					id: file.id,
