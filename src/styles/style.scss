@@ -4,6 +4,12 @@ $fa-font-path: "fonts";
 @import '../../node_modules/@fortawesome/fontawesome-free/scss/regular.scss';
 
 .wp-block-sortabrilliant-card-catalog {
+
+    .far {
+        font-family: 'Font Awesome 5 Free' !important;
+        font-weight: 400 !important;
+    }
+
     &:not(.is-style-default) {
         .list,
         .block-editor-block-list__layout {
@@ -27,11 +33,14 @@ $fa-font-path: "fonts";
             align-items: center;
             display: flex;
             flex-direction: column;
+            justify-content: flex-start;
+            overflow-wrap: anywhere;
 
             &::before {
                 font-size: 40px;
                 height: 40px;
                 width: 40px;
+                margin-bottom: 0.25em;
             }
         }
 
@@ -42,9 +51,15 @@ $fa-font-path: "fonts";
     }
 
     &:not(.is-style-grid-view) {
-        .block-editor-block-list__layout [data-type="core/file"],
+        .block-editor-block-list__layout .wp-block-file,
         .list .wp-block-file {
+            display: flex;
+            flex-wrap: nowrap;
             justify-content: flex-start;
+
+            &::before {
+                margin-right: 0.25em;
+            }
         }
     }
 
@@ -65,6 +80,16 @@ $fa-font-path: "fonts";
 
         :first-child {
             margin-left: 0;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            white-space: pre;
+        }
+
+        select {
+            width: auto;
         }
     }
 }

@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import { startCase } from 'lodash';
 import classnames from 'classnames';
 
 /**
@@ -25,7 +26,7 @@ import {
  * Internal dependencies
  */
 import { default as icon } from './icon';
-import { extensionToIcon } from './extension-helpers';
+import { extensionToIcon, filterUnmatchedIcons } from './extension-helpers';
 
 class CardCatalogEdit extends Component {
 	constructor() {
@@ -76,6 +77,10 @@ class CardCatalogEdit extends Component {
 			noticeUI,
 		} = this.props;
 
+		filterUnmatchedIcons(
+			this.props.innerBlocks.map( file => file.attributes.href )
+		);
+
 		return (
 			<div className={ className }>
 				{ hasInnerBlocks &&
@@ -83,10 +88,17 @@ class CardCatalogEdit extends Component {
 						<div className="wp-block-search__label">{ __( 'Search', 'card-catalog' ) }</div>
 						<input className="wp-block-search__input" placeholder={ __( 'Search', 'card-catalog' ) } />
 						<div className="sortabrilliant-card-catalog__filter">
-							<button className="wp-block-search__button">{ __( 'All', 'card-catalog' ) }</button>
-							<button className="wp-block-search__button">{ __( 'Images', 'card-catalog' ) }</button>
-							<button className="wp-block-search__button">{ __( 'Documents', 'card-catalog' ) }</button>
-							<button className="wp-block-search__button">{ __( 'Archives', 'card-catalog' ) }</button>
+							<label htmlFor="card-catalog-filter">{ __( 'Filter by', 'card-catalog' ) }</label>
+							<select id="card-catalog-filter" className="sortabrilliant-card-catalog__filter--field">
+								{ filterUnmatchedIcons(
+									this.props.innerBlocks.map( file => file.attributes.href )
+								).map( iconSlug => {
+									const iconLabel = iconSlug.replace( 'fa-file-', '' );
+									return (
+										<option key={ iconLabel } value={ iconLabel }>{ startCase( iconLabel ) }</option>
+									);
+								} ) }
+							</select>
 						</div>
 					</Disabled>
 				}

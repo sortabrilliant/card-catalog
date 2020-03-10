@@ -1,12 +1,18 @@
 /**
  * External dependencies
  */
+import { startCase } from 'lodash';
 import List from 'list.js';
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
+import { iconExtensions, filterUnmatchedIcons } from './extension-helpers';
 
 document.addEventListener( 'DOMContentLoaded', () => {
     const cardCatalogs = document.getElementsByClassName( 'wp-block-sortabrilliant-card-catalog' );
@@ -26,28 +32,30 @@ document.addEventListener( 'DOMContentLoaded', () => {
         } );
         element.appendChild( wrapper );
 
-        const filterWrapper = document.createElement( 'div' );
-        filterWrapper.className = 'sortabrilliant-card-catalog__filter';
+        const parser = new DOMParser();
 
-        // Add filter reset button
-        const filterAll = document.createElement( 'button' );
-        filterAll.innerHTML = __( 'All', 'card-catalog' );
-        filterAll.setAttribute( 'class', 'wp-block-search__button' );
+        // Create filter select control
+        const domFilterDropdown = [
+            '<div class="sortabrilliant-card-catalog__filter">',
+            `<label>${__( 'Filter by', 'card-catalog' )}</label>`,
+            '<select class="sortabrilliant-card-catalog__filter--field">',
+            `<option value="all">${__( 'All', 'card-catalog' )}</option>`,
+            '</select>',
+            '</div>',
+        ];
 
-        // Add filter images button
-        const filterImage = document.createElement( 'button' );
-        filterImage.innerHTML = __( 'Images', 'card-catalog' );
-        filterImage.setAttribute( 'class', 'wp-block-search__button' );
+        // Only output filters for file types that exist.
+        const fileBlockPaths = Object.values( wrapper.children ).map( node => node.firstChild.href );
+        filterUnmatchedIcons( fileBlockPaths ).forEach( iconSlug => {
+            const iconLabel = iconSlug.replace( 'fa-file-', '' );
+            domFilterDropdown.splice( 4, 0, `<option value="${iconLabel}">${startCase( iconLabel )}</option>` );
+        } )
 
-        // Add filter documents button
-        const filterDocument = document.createElement( 'button' );
-        filterDocument.innerHTML = __( 'Documents', 'card-catalog' );
-        filterDocument.setAttribute( 'class', 'wp-block-search__button' );
-
-        // Add filter archives button
-        const filterArchive = document.createElement( 'button' );
-        filterArchive.innerHTML = __( 'Archives', 'card-catalog' );
-        filterArchive.setAttribute( 'class', 'wp-block-search__button' );
+        element.prepend(
+            parser.parseFromString(
+                domFilterDropdown.join( '' ), 'text/html'
+            ).body.firstChild
+        );
 
         // Add search input
         const searchInput = document.createElement( 'input' );
@@ -60,12 +68,6 @@ document.addEventListener( 'DOMContentLoaded', () => {
         searchLabel.setAttribute( 'class', 'search wp-block-search__label' );
         searchLabel.innerText = __( 'Search', 'card-catalog' );
 
-        filterWrapper.append( filterAll );
-        filterWrapper.append( filterImage );
-        filterWrapper.append( filterDocument );
-        filterWrapper.append( filterArchive );
-
-        element.prepend( filterWrapper );
         element.prepend( searchInput );
         element.prepend( searchLabel );
 
@@ -76,16 +78,10 @@ document.addEventListener( 'DOMContentLoaded', () => {
             ]
         } );
 
-        const addClickHandler = ( elm, regex ) => {
-            elm.addEventListener( 'click', event => {
-                event.preventDefault();
-                cardCatalog.filter( item => item.values().href.match( regex ) );
-            } );
-        }
-
-        addClickHandler( filterArchive, /\.(zip|tar|gz)/i );
-        addClickHandler( filterDocument, /\.(doc|docx|docm|dotm|oth|odt|pdf|rtf|bin|csv|xps|xls|xlsx)/i );
-        addClickHandler( filterImage, /\.(bmp|gif|ico|jpeg|jpg|png|svg|ti|tiff|webp)/i );
-        addClickHandler( filterAll, /./i );
+        // Setup the card catalog filters when select control changes.
+        element.children[ 2 ].lastChild.addEventListener( 'change', event => {
+            event.preventDefault();
+            cardCatalog.filter( item => item.values().href.match( iconExtensions[ `fa-file-${event.target.value}` ] ) );
+        } );
     } );
 } );

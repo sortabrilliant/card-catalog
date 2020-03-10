@@ -22,3 +22,8 @@ export const extensionToIcon = ( filepath ) => {
 
     return 'fa-file';
 };
+
+export const filterUnmatchedIcons = ( paths ) =>
+    Object.entries( iconExtensions )
+        .filter( ( [ , regex ] ) => -1 !== paths.findIndex( ( path ) => path.match( regex ) ) )
+        .map( ( [ icon, ] ) => icon );
