@@ -5,7 +5,7 @@ $fa-font-path: "fonts";
 
 .wp-block-sortabrilliant-card-catalog {
 
-    .far {
+    .far::before {
         font-family: 'Font Awesome 5 Free' !important;
         font-weight: 400 !important;
     }
