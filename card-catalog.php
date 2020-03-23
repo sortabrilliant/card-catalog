@@ -5,7 +5,7 @@
  * Description: Rejoice digital hoarders. You now have way to easily display large numbers of files on your WordPress site.
  * Author: sorta brilliant
  * Author URI: https://sortabrilliant.com
- * Version: 1.0.0
+ * Version: 1.0.1
  * License: GPL2+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *
@@ -14,7 +14,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CARD_CATALOG_VERSION', '1.0.0' );
+define( 'CARD_CATALOG_VERSION', '1.0.1' );
 define( 'CARD_CATALOG_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'CARD_CATALOG_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
